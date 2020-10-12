@@ -53,4 +53,6 @@ def main():
         loop = loop_input.lower() in ["y", "yes"]
 
 
-main()
+if __name__ == "__main__":
+    main()
+
