@@ -1,5 +1,5 @@
 from abc import ABC, abstractclassmethod, abstractstaticmethod
-from typing import Any, Generic, TypeVar, Union, Type
+from typing import Any, Generic, Tuple, TypeVar, Type, Union
 
 
 KeyTypeT = TypeVar('KeyTypeT', bound='Key')
@@ -22,6 +22,7 @@ class KeyModifier(ABC):
 
 
 class Cipher(ABC):
+    desired_key_type = str
     @abstractstaticmethod
     def encrypt_message(message: str, key: Key) -> str:
         pass
@@ -33,4 +34,3 @@ class Cipher(ABC):
     @abstractstaticmethod
     def generate_key(key_size: int) -> Key:
         pass
-

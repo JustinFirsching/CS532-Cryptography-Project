@@ -10,11 +10,9 @@ class RepeatToMessageLengthModifier(KeyModifier):
         if len_diff <= 0:
             return Key(key_str[:msg_len])
 
-        key_repeats = len_diff // msg_len
-        partial_key_lengths = len_diff % msg_len
-
-        additional_key_data = key_str * key_repeats + key_str[:partial_key_lengths]
-        return Key(key_str + additional_key_data)
+        key_repeats = msg_len // key_len
+        partial_key_lengths = msg_len % key_len
+        return Key(key_str * key_repeats + key_str[:partial_key_lengths])
 
 
 class PadXToMessageLengthModifier(KeyModifier):
@@ -27,4 +25,16 @@ class PadXToMessageLengthModifier(KeyModifier):
         if len_diff <= 0:
             return Key(key[:msg_len])
         return Key(key + "x" * len_diff)
+
+
+class LowercaseKeyModifier(KeyModifier):
+    @staticmethod
+    def modify_key(key: Key[str], message: str) -> Key:
+        return Key(key.get_key().lower())
+
+
+def apply_modifiers(key: Key, message: str, *modifiers: KeyModifier) -> Key:
+    for modifier in modifiers:
+        key = modifier.modify_key(key, message)
+    return key
 

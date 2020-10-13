@@ -1,0 +1,2 @@
+import cryptosystem
+cryptosystem.main()

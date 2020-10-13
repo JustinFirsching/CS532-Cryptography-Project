@@ -1,6 +1,8 @@
-from string import ascii_lowercase
 from random import choice
+from string import ascii_lowercase
+from typing import Tuple
 
+from TextEncryption.KeyModifiers import RepeatToMessageLengthModifier, LowercaseKeyModifier, apply_modifiers
 from TextEncryption import Cipher
 from TextEncryption import Key
 from DataSanitization.Sanitizers import AlphaSanitizer, LowercaseCharacterSanitizer, NoSpacesSanitizer, apply_sanitizers
@@ -8,57 +10,37 @@ from DataSanitization.Sanitizers import AlphaSanitizer, LowercaseCharacterSaniti
 
 class VigenereCipher(Cipher):
     data_sanitizers = [AlphaSanitizer, LowercaseCharacterSanitizer, NoSpacesSanitizer]
-    key_modifiers = [PadKeyModifier]
+    key_modifiers = [RepeatToMessageLengthModifier, LowercaseKeyModifier]
     @staticmethod
-    def encrypt_message(message: str, key: Key):
+    def encrypt_message(message: str, key: Key) -> str:
         clean_msg = apply_sanitizers(message, *VigenereCipher.data_sanitizers)
-
+        valid_key = apply_modifiers(key, message, *VigenereCipher.key_modifiers)
+        key_data = valid_key.get_key()
+        print(key_data, clean_msg)
+        ciphertext = ""
+        for i in range(len(clean_msg)):
+            clean_msg_int = ord(clean_msg[i]) - ord('a')
+            key_data_int = ord(key_data[i]) - ord('a')
+            char = (clean_msg_int + key_data_int)  % 26
+            char += ord('A')
+            ciphertext += chr(char)
+        return ciphertext
 
     @staticmethod
-    def decrypt_message(message: str, key: Key):
-        pass
+    def decrypt_message(message: str, key: Key) -> str:
+        clean_msg = apply_sanitizers(message, *VigenereCipher.data_sanitizers)
+        valid_key = apply_modifiers(key, message, *VigenereCipher.key_modifiers)
+        key_data = valid_key.get_key()
+        plaintext = ""
+        for i in range(len(message)):
+            cipher_int = ord(clean_msg[i]) - ord('a')
+            key_int = ord(key_data[i]) - ord('a')
+            char = (cipher_int - key_int + 26) % 26
+            char += ord('A')
+            plaintext += chr(char)
+        return plaintext
 
     @staticmethod
     def generate_key(key_size: int) -> Key:
         return "".join(choice(ascii_lowercase) for _ in range(key_size))
 
-# Makes Repeating Key
-def genRepeatingKey(plaintext, key):
-    if len(key) == len(plaintext):
-        return(key)
-    elif len(key) < len(plaintext):
-        key = list(key)
-        for i in range(len(plaintext) - len(key)):
-            key.append(key[i % len(key)])
-        return(''.join(key))
-
-    return (key[:len(plaintext)])
-
-# Encrypts message with key, generates key if not provided. Repeats key if provided
-def encrypt(message, key='', isRandomKey = False):
-    plaintext = stripText(message)
-    key = stripText(key)
-    if (key == '') or (isRandomKey is True):
-        key = genRandomKey(plaintext)
-    key = genRepeatingKey(plaintext, key)
-    ciphertext = []
-    for i in range(len(plaintext)):
-        char = ( ord(plaintext[i]) + ord(key[i]) ) % 26
-        char += ord('A')
-        ciphertext.append(chr(char))
-    return { 'ciphertext': ''.join(ciphertext), 'key': key }
-
-# Decrypts ciphertext with key
-def decrypt(ciphertext, key):
-    plaintext = []
-    for i in range(len(ciphertext)):
-        char = ( ord(ciphertext[i]) - ord(key[i]) + 26) % 26
-        char += ord('A')
-        plaintext.append(chr(char))
-    return ''.join(plaintext)
-
-message = 'Hello_World! ! !'
-print(message)
-encrypted_message = encrypt(message)
-decrypted = decrypt(encrypted_message['ciphertext'], encrypted_message['key'])
-print(decrypted)

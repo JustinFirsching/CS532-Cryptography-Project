@@ -1,8 +1,15 @@
 import sys
+import numpy as np
+import re
 
 from enum import Enum
 from TextEncryption import Cipher
+from TextEncryption.Vigenere import VigenereCipher
 from TextEncryption import Key
+
+
+RANDOM_STR_KEY_SIZE = 32
+RANDOM_MATRIX_KEY_SIZE = 2
 
 
 class Capability(Enum):
@@ -26,19 +33,50 @@ def get_targeted_event() -> Capability:
     return selection
 
 def get_text_encryption() -> Cipher:
-    pass
+    # TODO: Implement more than one encryption method
+    return VigenereCipher
 
 def get_text() -> str:
+    # Strip the input to get rid of random spaces at beginning or end
+    return input("Enter the text you would like to use: ").strip()
+
+def get_str_key(cipher: Cipher, required: bool = False) -> Key:
+    if required:
+        input_key = ""
+        while not input_key:
+            input_key = input("Key: ").strip()
+        key = Key(input_key)
+    else:
+        user_input = input("Desired Key (Press Enter to Generate a Random One): ")
+        if user_input:
+            key = Key(user_input)
+        else:
+            key = cipher.generate_key(RANDOM_STR_KEY_SIZE)
+    return key
+
+def get_matrix_key(cipher: Cipher, required: bool = False) -> Key:
     pass
 
-def get_key(cipher: Cipher) -> Key:
-    pass
+def get_key(cipher: Cipher, required: bool = False) -> Key:
+    if cipher.desired_key_type is np.ndarray:
+        key_fetcher = get_matrix_key
+    else:
+        key_fetcher = get_str_key
+    return key_fetcher(cipher, required)
 
 def run_encryption():
-    pass
+    text_encryptor = get_text_encryption()
+    text = get_text()
+    key = get_key(text_encryptor)
+    encrypted_message = text_encryptor.encrypt_message(text, key)
+    print(encrypted_message)
 
 def run_decryption():
-    pass
+    text_decryptor = get_text_encryption()
+    text = get_text()
+    key = get_key(text_decryptor, True)  # The key is required here to get the actual text
+    decrypted_message = text_decryptor.decrypt_message(text, key)
+    print(decrypted_message)
 
 def main():
     loop = True
