@@ -16,7 +16,6 @@ class VigenereCipher(Cipher):
         clean_msg = apply_sanitizers(message, *VigenereCipher.data_sanitizers)
         valid_key = apply_modifiers(key, message, *VigenereCipher.key_modifiers)
         key_data = valid_key.get_key()
-        print(key_data, clean_msg)
         ciphertext = ""
         for i in range(len(clean_msg)):
             clean_msg_int = ord(clean_msg[i]) - ord('a')
@@ -42,5 +41,5 @@ class VigenereCipher(Cipher):
 
     @staticmethod
     def generate_key(key_size: int) -> Key:
-        return "".join(choice(ascii_lowercase) for _ in range(key_size))
+        return Key("".join(choice(ascii_lowercase) for _ in range(key_size)))
 
