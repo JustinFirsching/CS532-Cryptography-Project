@@ -23,6 +23,10 @@ def get_square_dimensions(size_needed: int) -> Tuple[int, int]:
 def get_random_image(height: int, width: int) -> np.ndarray:
     return np.random.normal(128, 16, (height, width, 3)).astype(np.uint8)
 
+def get_random_square_image(min_size: int) -> np.ndarray:
+    dims = get_square_dimensions(min_size)
+    return get_random_image(*dims)
+
 def valid_image_size(image: np.ndarray, needed_size: int) -> bool:
     return np.prod(image.shape) >= needed_size
 
@@ -45,15 +49,14 @@ def embed_message_in_place(message: str, image: np.ndarray):
             pixel = row[j]
             for k in range(image.shape[2]):
                 channel = pixel[k]
-                image[i, j, k] = channel & ~1 | int(message_to_embed[current_bit_idx])
+                image[i, j, k] = (channel & ~1) | int(message_to_embed[current_bit_idx])
                 current_bit_idx += 1
-
                 # This means the message is completely embedded
                 if current_bit_idx == len(message_to_embed):
                     return
 
 def extract_message(image: np.ndarray) -> str:
-    values = image.reshape(np.prod(image.shape))
+    values = image.flatten()
     counting_bits = [v & 1 for v in values[:_COUNT_SIZE]]
     bits_to_extract = int(''.join(map(str, counting_bits)), 2)
     message_bits = [v & 1 for v in values[_COUNT_SIZE:bits_to_extract + _COUNT_SIZE]]
