@@ -1,5 +1,4 @@
 import os
-import re
 import sys
 
 import ipywidgets as widgets
