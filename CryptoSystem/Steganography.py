@@ -42,7 +42,6 @@ def embed_message_in_place(message: str, image: np.ndarray):
     message_bits = message_to_bits(message)
     message_to_embed = f"{len(message_bits):0{_COUNT_SIZE}b}{message_bits}"
     current_bit_idx = 0
-    pass
     for i in range(image.shape[0]):
         row = image[i]
         for j in range(image.shape[1]):
