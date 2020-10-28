@@ -46,7 +46,7 @@ Lastly, navigate to the web console.
 - Key: 
     parkfriends
 - Image:    
-![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/images/inputs/pic1.png)
+![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/original_image.png)
 
 ```console
 user@machine:~$ python3 cryptosystem.py
@@ -63,7 +63,7 @@ Do you want to run again? [y/N] no
 #### Decryption
 - Key: parkfriends
 - Encrypted Image:    
-![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/images/outputs/Output1.png)
+![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/encrypted_image.png)
 
 ```console
 user@machine:~$ python3 cryptosystem.py
@@ -76,7 +76,7 @@ Key: parkfriends
 HEYLETSMEETATTHEPARKAROUNDEIGHTTONIGHT
 Do you want to run again? [y/N] no
 ```
-Output (original plaintext):    
+Output:    
     HEYLETSMEETATTHEPARKAROUNDEIGHTTONIGHT
 
 -------
