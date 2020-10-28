@@ -30,7 +30,9 @@ user@machine:~$ python run_cli.py
 ----
 To use the cryptosystem via Jupyter Notebook's web interface, first enable the environment.yml provided in the repository.
 ```console
-user@machine:~$ conda activate environment
+user@machine:~$ conda config --set ssl_verify no
+user@machine:~$ conda create --name cryptosystem --file environment.yml
+user@machine:~$ conda activate cryptosystem
 ```
 Next, lauch the Jupyter Notebook.
 ```console
