@@ -82,10 +82,10 @@ Output (original plaintext):
 -------
 ### (2) Encryption and Decryption with the Jupyter Notebook Web Interface
 #### Encryption
-![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/webUI_encryption)
+![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/webUI_encryption.png)
 
 #### Decryption
-![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/webUI_decryption)
+![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/webUI_decryption.png)
 
 ## Libraries Used
 - Built-in Python Libraries:
