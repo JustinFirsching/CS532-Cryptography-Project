@@ -14,6 +14,7 @@ from cv2 import cv2
 from CryptoSystem.Strategy import encrypt, decrypt
 from CryptoSystem.Ciphers import Cipher
 from CryptoSystem.Ciphers.Vigenere import VigenereCipher
+from CryptoSystem.Exceptions import ImageTooSmallException
 from CryptoSystem.Key import Key, KeyPart
 from CryptoSystem.Steganography import get_random_image, get_random_square_image, \
                                        get_minimum_size, get_square_dimensions, \
@@ -224,6 +225,11 @@ class IPythonNB:
             lambda *args: self.decrypt(encryption_key.value, encrypted_image.value)
         )
 
+    def _gui_error(self, message: str):
+        from IPython.display import display, HTML
+        js = f"<script>alert('{message}');</script>"
+        display(HTML(js))
+
     def encrypt(self, raw_text: str, text_key: str, image: dict):
         input_image_file = "ImageToEncrypt.png"
         key_file = "EncryptionKey.key"
@@ -233,14 +239,17 @@ class IPythonNB:
         with open(input_image_file, "wb") as f:
             f.write(image)
 
-        encrypted_text, encrypted_image, key = encrypt(raw_text, input_image_file, KeyPart(text_key), self.cipher)
-        key.export_key(key_file)
-        cv2.imwrite(output_image_file, encrypted_image, [cv2.IMWRITE_PNG_COMPRESSION, 9])
+        try:
+            encrypted_text, encrypted_image, key = encrypt(raw_text, input_image_file, KeyPart(text_key), self.cipher)
+            key.export_key(key_file)
+            cv2.imwrite(output_image_file, encrypted_image, [cv2.IMWRITE_PNG_COMPRESSION, 9])
 
-        if self.encrypted_text_widget is None:
-            self.add_encryption_output(encrypted_text, output_image_file, key_file)
-        else:
-            self.encrypted_text_widget.value = encrypted_text
+            if self.encrypted_text_widget is None:
+                self.add_encryption_output(encrypted_text, output_image_file, key_file)
+            else:
+                self.encrypted_text_widget.value = encrypted_text
+        except ImageTooSmallException:
+            self._gui_error("Selected image is not large enough. Please select a larger image and try again")
 
     def decrypt(self, key: dict, image: dict):
         image_file = "ImageToDecrypt.png"

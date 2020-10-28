@@ -4,21 +4,25 @@ import numpy as np
 from cv2 import cv2
 from CryptoSystem.Ciphers import Cipher
 from CryptoSystem.Ciphers.Image import ImageCipher
+from CryptoSystem.Exceptions import ImageTooSmallException
 from CryptoSystem.Key import Key, KeyPart
 from CryptoSystem.Steganography import extract_message, get_minimum_size, embed_message
 
 
-RANDOM_STR_KEY_SIZE = 32
-RANDOM_MATRIX_KEY_SIZE = 2
-
-
 def encrypt(text: str, image: Union[str, np.ndarray], text_key: KeyPart, cipher: Cipher) -> Tuple[str, np.ndarray, Key]:
+    """
+    raises: ImageTooSmallException
+    """
     # Text Encryption
     encrypted_text = cipher.encrypt(text, text_key)
 
     # Image Steganography
     if type(image) is str:
         image = cv2.imread(image, cv2.IMREAD_ANYCOLOR)
+
+    if(get_minimum_size(encrypted_text) > image.size):
+        raise ImageTooSmallException()
+
     embedded_message = embed_message(encrypted_text, image)
 
     rows, cols = embedded_message.shape[:2]
