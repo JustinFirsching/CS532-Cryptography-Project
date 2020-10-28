@@ -18,7 +18,7 @@ Implementation of a cryptosystem using a variety of data security techniques inc
 
 ## Prerequisites
 You need to have at least [Python3](ttps://www.python.org/downloads/) on your system.
-You also need to have [OpenCV](https://pypi.org/project/opencv-python/) and [NumPy](https://pypi.org/project/numpy/) installed.
+You also need to have [OpenCV](https://pypi.org/project/opencv-python/), [NumPy](https://pypi.org/project/numpy/) and [iPyWidgets](https://ipywidgets.readthedocs.io/en/latest/user_install.html) installed.
 
 To utilize the Web GUI you must have [Jupyter Notebook](https://jupyter.org/install), as well as [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
@@ -56,7 +56,10 @@ Select the targeted operation
 Selection: 1
 Enter the text you would like to use: Hey! Let's meet at the park around eight tonight.
 Desired Key (Press Enter to Generate a Random One): parkfriends
-Path to the image file (Press Enter to Generate a Random Image): ./images/inputs/pic1.png
+Path to the image file (Press Enter to Generate a Random Image): ./examples/original_image.png
+Encrypted Message: WEPVJKAQRHLPTKRJGIVXDJDUENJZOLGWGCIXRY
+Encrypted image saved to EncryptedImage.png
+Encryption key saved to EncryptionKey.key
 Do you want to run again? [y/N] no
 ```  
 
@@ -71,13 +74,20 @@ Select the targeted operation
 [1] Encrypt
 [2] Decrypt
 Selection: 2
-Path to image file: ./images/outputs/Output1.png
-Key: parkfriends
-HEYLETSMEETATTHEPARKAROUNDEIGHTTONIGHT
-Do you want to run again? [y/N] no
+Enter the path to the key file: ./examples/EncryptionKey.key
+Enter the path to the image: ./examples/encrypted_image.png
+Decrypted Message: HEYLETSMEETATTHEPARKAROUNDEIGHTTONIGHT
+Image saved to DecryptedImage.png
+Do you want to run again? [y/N] 
 ```
-Output:    
+Output:
+
+- Message: 
     HEYLETSMEETATTHEPARKAROUNDEIGHTTONIGHT
+
+- Decrypted Image:      
+![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/decrypted_image.png)
+
 
 -------
 ### (2) Encryption and Decryption with the Jupyter Notebook Web Interface
