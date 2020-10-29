@@ -1,7 +1,7 @@
-# CS532 - Cryptography Project 
-Implementation of a cryptosystem using a variety of data security techniques including text encryption and decryption, image steganography, and image encryption and decryption. 
+# CS532 - Cryptography Project
+Implementation of a cryptosystem using a variety of data security techniques including text encryption and decryption, image steganography, and image encryption and decryption.
 
-| Technique | Implementation| 
+| Technique | Implementation|
 | --------- | ------ |
 | Text Encryption and Decryption | Vigenere Cipher <sup>[[1]](#References)</sup>|
 | Image Steganography | Least Significant Bit <sup>[[2]](#References)</sup> |
@@ -31,23 +31,23 @@ user@machine:~$ python run_cli.py
 To use the cryptosystem via Jupyter Notebook's web interface, first enable the environment.yml provided in the repository.
 ```console
 user@machine:~$ conda config --set ssl_verify no
-user@machine:~$ conda create --name cryptosystem --file environment.yml
+user@machine:~$ conda env create --file environment.yml
 user@machine:~$ conda activate cryptosystem
 ```
 Next, lauch the Jupyter Notebook.
 ```console
 user@machine:~$ jupyter notebook
 ```
-Lastly, navigate to the web console.
+Lastly, navigate to the web console. Once the web console has been opened, press the "Restart and Run All Cells" button (Two Right Facing Arrows).
 
 ## Examples
 ### (1) Encryption and Decryption with the command-line interface.
 #### Encryption
 - Text:
     Hey! Let's meet at the park around eight tonight.
-- Key: 
+- Key:
     parkfriends
-- Image:    
+- Image:
 ![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/original_image.png)
 
 ```console
@@ -63,11 +63,11 @@ Encrypted Message: WEPVJKAQRHLPTKRJGIVXDJDUENJZOLGWGCIXRY
 Encrypted image saved to EncryptedImage.png
 Encryption key saved to EncryptionKey.key
 Do you want to run again? [y/N] no
-```  
+```
 
 #### Decryption
 - Key: parkfriends
-- Encrypted Image:    
+- Encrypted Image:
 ![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/encrypted_image.png)
 
 ```console
@@ -80,14 +80,14 @@ Enter the path to the key file: ./examples/EncryptionKey.key
 Enter the path to the image: ./examples/encrypted_image.png
 Decrypted Message: HEYLETSMEETATTHEPARKAROUNDEIGHTTONIGHT
 Image saved to DecryptedImage.png
-Do you want to run again? [y/N] 
+Do you want to run again? [y/N]
 ```
 Output:
 
-- Message: 
+- Message:
     HEYLETSMEETATTHEPARKAROUNDEIGHTTONIGHT
 
-- Decrypted Image:      
+- Decrypted Image:
 ![](https://github.com/JustinFirsching/CS532-Cryptography-Project/blob/main/examples/decrypted_image.png)
 
 
@@ -110,7 +110,7 @@ Output:
     - re
     - sys
     - string
-    - typing 
+    - typing
 - OpenCV
 - NumPy
 - Jupyter Notebook
