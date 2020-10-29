@@ -244,6 +244,8 @@ class IPythonNB:
             key.export_key(key_file)
             cv2.imwrite(output_image_file, encrypted_image, [cv2.IMWRITE_PNG_COMPRESSION, 9])
 
+            print(f"Row Key: {key.get_image_keys()[0]}")
+            print(f"Column Key: {key.get_image_keys()[1]}")
             if self.encrypted_text_widget is None:
                 self.add_encryption_output(encrypted_text, output_image_file, key_file)
             else:
