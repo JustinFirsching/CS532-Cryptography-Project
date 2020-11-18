@@ -5,7 +5,7 @@ Implementation of a cryptosystem using a variety of data security techniques inc
 | --------- | ------ |
 | Text Encryption and Decryption | Vigenere Cipher <sup>[[1]](#References)</sup>|
 | Image Steganography | Least Significant Bit <sup>[[2]](#References)</sup> |
-| Image Encryption and Decryption | Rubick's Cube Principle <sup>[[3]](#References)</sup>|
+| Image Encryption and Decryption | Rubik's Cube Principle <sup>[[3]](#References)</sup>|
 
 
 ## Table of Contents
